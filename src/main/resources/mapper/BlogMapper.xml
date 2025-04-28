@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b.plus.blog.mapper.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.b.plus.blog.entity.Blog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, content, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.b.plus.blog.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO blog (title, content, create_time, update_time)
+        VALUES (#{title}, #{content}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="com.b.plus.blog.entity.Blog">
+        UPDATE blog
+        SET title = #{title},
+            content = #{content},
+            update_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM blog WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM blog
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM blog
+    </select>
+</mapper>
