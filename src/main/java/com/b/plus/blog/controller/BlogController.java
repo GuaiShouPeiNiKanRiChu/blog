@@ -2,6 +2,7 @@ package com.b.plus.blog.controller;
 
 import com.b.plus.blog.entity.Blog;
 import com.b.plus.blog.mapper.BlogMapper;
+import com.b.plus.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,12 @@ public class BlogController {
     @Autowired
     private BlogMapper blogMapper;
 
-    @PostMapping
-    public int create(@RequestBody Blog blog) {
-        return blogMapper.insert(blog);
+    @Autowired
+    private BlogService blogService;
+
+    @PostMapping("/add")
+    public void create(@RequestBody Blog blog) {
+        blogService.add(blog);
     }
 
     @DeleteMapping("/{id}")
