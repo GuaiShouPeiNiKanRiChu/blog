@@ -42,4 +42,11 @@
         <include refid="Base_Column_List"/>
         FROM blog
     </select>
+
+    <select id="count">
+        SELECT
+        count(1)
+        FROM blog
+    </select>
+
 </mapper>

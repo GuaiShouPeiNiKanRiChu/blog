@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.ExecutorCompletionService;
-
 /**
  * @description: 博客相关操作的实现类
  * @author: biyunfei3@jd.com
@@ -29,7 +26,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void add(Blog blog) {
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             try {
                 int finalI = i;
                 taskExecutor.execute(()-> {
@@ -50,6 +47,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     public void insert(int i, Blog blog) throws InterruptedException {
+        Thread.sleep(50);
         blog.setContent("=======" + i);
         blogMapper.insert(blog);
     }

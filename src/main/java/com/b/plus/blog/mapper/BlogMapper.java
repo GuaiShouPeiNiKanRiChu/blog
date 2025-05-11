@@ -12,4 +12,6 @@ public interface BlogMapper {
     int update(Blog blog);
     Blog selectById(Long id);
     List<Blog> selectAll();
+
+    int count();
 }
