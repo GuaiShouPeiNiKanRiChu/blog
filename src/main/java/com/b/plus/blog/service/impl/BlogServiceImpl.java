@@ -31,7 +31,6 @@ public class BlogServiceImpl implements BlogService {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             try {
-                CompletionService<Void> completionService = new ExecutorCompletionService<>(taskExecutor);
                 int finalI = i;
                 taskExecutor.execute(()-> {
                     try {
