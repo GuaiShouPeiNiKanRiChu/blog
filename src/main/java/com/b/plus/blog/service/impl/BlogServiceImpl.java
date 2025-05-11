@@ -52,7 +52,6 @@ public class BlogServiceImpl implements BlogService {
 
     public void insert(int i, Blog blog) throws InterruptedException {
         blog.setContent("=======" + i);
-        Thread.sleep(1000);
         blogMapper.insert(blog);
     }
 }
