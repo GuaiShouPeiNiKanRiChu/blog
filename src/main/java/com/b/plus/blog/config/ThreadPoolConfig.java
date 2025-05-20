@@ -18,11 +18,11 @@ public class ThreadPoolConfig {
     /**
      * 核心线程数（默认线程数）
      */
-    private static final int CORE_POOL_SIZE = 1;
+    private static final int CORE_POOL_SIZE = 2000;
     /**
      * 最大线程数
      */
-    private static final int MAX_POOL_SIZE = 1;
+    private static final int MAX_POOL_SIZE = 2000;
     /**
      * 允许线程空闲时间（单位：默认为秒）
      */
@@ -30,7 +30,7 @@ public class ThreadPoolConfig {
     /**
      * 缓冲队列大小
      */
-    private static final int QUEUE_CAPACITY = 1000;
+    private static final int QUEUE_CAPACITY = 10000;
     /**
      * 线程池名前缀
      */
