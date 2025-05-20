@@ -43,10 +43,12 @@
         FROM blog
     </select>
 
-    <select id="count">
+    <select id="selectByTitle" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
-        count(1)
+        <include refid="Base_Column_List"/>
         FROM blog
+        WHERE title = #{title}
     </select>
+
 
 </mapper>

@@ -13,5 +13,5 @@ public interface BlogMapper {
     Blog selectById(Long id);
     List<Blog> selectAll();
 
-    int count();
+    Blog selectByTitle(String title);
 }
