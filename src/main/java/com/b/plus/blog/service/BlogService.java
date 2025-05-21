@@ -5,4 +5,6 @@ import com.b.plus.blog.entity.Blog;
 public interface BlogService {
 
     void add(Blog blog);
+
+    String getContent(String title);
 }

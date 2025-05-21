@@ -1,5 +1,6 @@
 package com.b.plus.blog.service.impl;
 
+import com.b.plus.blog.common.CaffeineCache;
 import com.b.plus.blog.entity.Blog;
 import com.b.plus.blog.mapper.BlogMapper;
 import com.b.plus.blog.service.BlogService;
@@ -23,6 +24,9 @@ public class BlogServiceImpl implements BlogService {
     @Qualifier("taskExecutor")
     private ThreadPoolTaskExecutor taskExecutor;
 
+    @Autowired
+    private CaffeineCache caffeineCache;
+
     @Override
     public void add(Blog blog) {
         long start = System.currentTimeMillis();
@@ -44,6 +48,13 @@ public class BlogServiceImpl implements BlogService {
         long durationMillis = end - start;
         double durationSeconds = durationMillis / 1000.0;
         System.out.println("方法耗时: " + durationSeconds + " 秒");
+    }
+
+    @Override
+    public String getContent(String title) {
+        String s = caffeineCache.get(title);
+        System.out.println("getContent:" + s);
+        return s;
     }
 
     public void insert(int i, Blog blog) throws InterruptedException {

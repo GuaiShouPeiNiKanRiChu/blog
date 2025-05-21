@@ -23,15 +23,16 @@ public class CaffeineCache {
 
     private final LoadingCache<String, String> cache =  Caffeine.newBuilder()
             .maximumSize(200)
-            .refreshAfterWrite(1, TimeUnit.MINUTES)
+            .refreshAfterWrite(5, TimeUnit.SECONDS)
             .build(this::getResultFromDb);
 
-    private String get(String title) {
+    public String get(String title) {
         return cache.get(title);
     }
 
     private String getResultFromDb(String title) {
         Blog blog = blogMapper.selectByTitle(title);
+        System.out.println("getResultFromDb ===================== ");
         return blog.getContent();
     }
 }

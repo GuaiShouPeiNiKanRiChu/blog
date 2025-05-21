@@ -19,7 +19,8 @@ public class BlogController {
 
     @PostMapping("/add")
     public void create(@RequestBody Blog blog) {
-        blogService.add(blog);
+        blogService.getContent(blog.getTitle());
+//        blogService.add(blog);
     }
 
     @DeleteMapping("/{id}")

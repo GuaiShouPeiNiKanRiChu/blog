@@ -47,7 +47,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM blog
-        WHERE title = #{title}
+        WHERE title = #{title} limit 1
     </select>
 
 
