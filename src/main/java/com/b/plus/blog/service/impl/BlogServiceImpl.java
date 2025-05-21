@@ -53,7 +53,6 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public String getContent(String title) {
         String s = caffeineCache.get(title);
-        System.out.println("getContent:" + s);
         return s;
     }
 

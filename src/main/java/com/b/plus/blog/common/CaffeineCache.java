@@ -23,7 +23,8 @@ public class CaffeineCache {
 
     private final LoadingCache<String, String> cache =  Caffeine.newBuilder()
             .maximumSize(200)
-            .refreshAfterWrite(5, TimeUnit.SECONDS)
+            .expireAfterAccess(1, TimeUnit.SECONDS)
+//            .refreshAfterWrite(1, TimeUnit.SECONDS)
             .build(this::getResultFromDb);
 
     public String get(String title) {
@@ -32,7 +33,6 @@ public class CaffeineCache {
 
     private String getResultFromDb(String title) {
         Blog blog = blogMapper.selectByTitle(title);
-        System.out.println("getResultFromDb ===================== ");
         return blog.getContent();
     }
 }
