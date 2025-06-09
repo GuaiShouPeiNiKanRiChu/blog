@@ -110,6 +110,11 @@ public class CaffeineCache {
      * @return 查询结果
      */
     private String getResultFromDb(String title) {
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+
+        }
         Blog blog = blogMapper.selectByTitle(title);
         return blog != null ? blog.getContent() : null;
     }
