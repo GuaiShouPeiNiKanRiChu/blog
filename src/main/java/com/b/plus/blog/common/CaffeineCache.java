@@ -7,11 +7,12 @@ import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -26,27 +27,18 @@ public class CaffeineCache {
     @Autowired
     private BlogMapper blogMapper;
 
-    @Autowired(required = false)
-    private Executor cacheExecutor;
+    @Autowired
+    @Qualifier("taskExecutor")
+    private ThreadPoolTaskExecutor taskExecutor;
 
     private final LoadingCache<String, String> cache = Caffeine.newBuilder()
             .maximumSize(200)
-            .expireAfterAccess(30, TimeUnit.SECONDS)
-            .refreshAfterWrite(1, TimeUnit.MILLISECONDS)
+            .refreshAfterWrite(5, TimeUnit.SECONDS)
             .build(this::getResultFromDb);
 
     private final AsyncLoadingCache<String, String> asyncCache = Caffeine.newBuilder()
             .maximumSize(200)
-            .expireAfterAccess(30, TimeUnit.SECONDS)
-            .refreshAfterWrite(1, TimeUnit.MILLISECONDS)
-            .executor(task -> {
-                if (cacheExecutor != null) {
-                    cacheExecutor.execute(task);
-                } else {
-                    // 如果没有配置专用线程池，使用默认线程池
-                    CompletableFuture.runAsync(task);
-                }
-            })
+            .refreshAfterWrite(5, TimeUnit.SECONDS)
             .buildAsync(this::getResultFromDb);
 
     /**
@@ -55,6 +47,14 @@ public class CaffeineCache {
      * @return 缓存值
      */
     public String get(String title) {
+//        asyncCache.get(title).thenAccept(result->{
+//            re
+//        });
+//        return asyncCache.get("yourKey")
+//                .thenApply(result -> {
+//                    // 异步处理结果
+//                    return result.toUpperCase();
+//                });
         return cache.get(title);
     }
 
@@ -111,7 +111,8 @@ public class CaffeineCache {
      */
     private String getResultFromDb(String title) {
         try {
-            Thread.sleep(1000);
+            System.out.println("title");
+            Thread.sleep(3000);
         } catch (Exception e) {
 
         }

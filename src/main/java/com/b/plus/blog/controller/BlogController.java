@@ -17,12 +17,25 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+
+
     @PostMapping("/add")
     public void create(@RequestBody Blog blog) {
         blogService.getContent(blog.getTitle());
 //        blogService.add(blog);
     }
 
+
+    @PostMapping("/delete")
+    public void delete(@RequestBody Blog blog) {
+        blogMapper.deleteByTitle(blog.getTitle());
+    }
+
+
+    @PostMapping("/add2")
+    public void createV2(@RequestBody Blog blog) {
+        blogService.add(blog);
+    }
     @DeleteMapping("/{id}")
     public int delete(@PathVariable Long id) {
         return blogMapper.deleteById(id);

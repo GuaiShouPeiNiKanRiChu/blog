@@ -50,5 +50,8 @@
         WHERE title = #{title} limit 1
     </select>
 
+    <delete id="deleteByTitle" parameterType="java.lang.String">
+        DELETE FROM blog WHERE title = #{title}
+    </delete>
 
 </mapper>

@@ -14,4 +14,6 @@ public interface BlogMapper {
     List<Blog> selectAll();
 
     Blog selectByTitle(String title);
+
+    int deleteByTitle(String title);
 }
